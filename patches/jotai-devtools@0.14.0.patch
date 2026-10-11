@@ -1,0 +1,42 @@
+diff --git a/dist/chunk-JPL4X5V2.esm.mjs b/dist/chunk-JPL4X5V2.esm.mjs
+index 719c16a1c93a88522551e84e17fddec2b535a537..0130bde53f89ef969a9356c9838426ded28dab24 100644
+--- a/dist/chunk-JPL4X5V2.esm.mjs
++++ b/dist/chunk-JPL4X5V2.esm.mjs
+@@ -1378,14 +1378,8 @@ var findSnapshotById = (snapshots, id) => {
+ // src/DevTools/Extension/components/Shell/components/TimeTravel/atoms.ts
+ var snapshotHistoryAtom = atom5([]);
+ var useSetSnapshotHistory = () => useSetAtom6(snapshotHistoryAtom, useDevtoolsJotaiStoreOptions());
+-var shouldRecordSnapshotHistoryKey = generateLocalStorageKey(
+-  "should-record-snapshot-history",
+-  0
+-);
+-var shouldRecordSnapshotHistoryAtom = atomWithStorage5(
+-  shouldRecordSnapshotHistoryKey,
+-  false
+-);
++// Start each inspector mount recording; a previous pause must not disable the next run.
++var shouldRecordSnapshotHistoryAtom = atom5(true);
+ var useShouldRecordSnapshotHistoryValue = () => useAtomValue6(shouldRecordSnapshotHistoryAtom, useDevtoolsJotaiStoreOptions());
+ var useShouldRecordSnapshotHistory = () => useAtom5(shouldRecordSnapshotHistoryAtom, useDevtoolsJotaiStoreOptions());
+ var selectedSnapshotIdHolderAtom = atom5(void 0);
+diff --git a/dist/chunk-SFUUTJEM.cjs.js b/dist/chunk-SFUUTJEM.cjs.js
+index 8f959b394c0a24cf921fabd9a51383b49290d3f6..21b294db96527f7f135a6f371db759ef53d58595 100644
+--- a/dist/chunk-SFUUTJEM.cjs.js
++++ b/dist/chunk-SFUUTJEM.cjs.js
+@@ -1378,14 +1378,8 @@ var findSnapshotById = (snapshots, id) => {
+ // src/DevTools/Extension/components/Shell/components/TimeTravel/atoms.ts
+ var snapshotHistoryAtom = _vanilla.atom.call(void 0, []);
+ var useSetSnapshotHistory = () => _react2.useSetAtom.call(void 0, snapshotHistoryAtom, useDevtoolsJotaiStoreOptions());
+-var shouldRecordSnapshotHistoryKey = generateLocalStorageKey(
+-  "should-record-snapshot-history",
+-  0
+-);
+-var shouldRecordSnapshotHistoryAtom = _utils.atomWithStorage.call(void 0, 
+-  shouldRecordSnapshotHistoryKey,
+-  false
+-);
++// Start each inspector mount recording; a previous pause must not disable the next run.
++var shouldRecordSnapshotHistoryAtom = _vanilla.atom.call(void 0, true);
+ var useShouldRecordSnapshotHistoryValue = () => _react2.useAtomValue.call(void 0, shouldRecordSnapshotHistoryAtom, useDevtoolsJotaiStoreOptions());
+ var useShouldRecordSnapshotHistory = () => _react2.useAtom.call(void 0, shouldRecordSnapshotHistoryAtom, useDevtoolsJotaiStoreOptions());
+ var selectedSnapshotIdHolderAtom = _vanilla.atom.call(void 0, void 0);

@@ -1,0 +1,75 @@
+.messenger-launcher {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 10;
+}
+.messenger-launcher__button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 12px;
+  background: #0085ff;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.messenger-launcher__plus {
+  display: none;
+}
+.messenger-launcher__button:focus-visible {
+  outline: 3px solid #244ac4;
+  outline-offset: 4px;
+}
+.messenger-launcher__button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+@media (max-width: 640px) {
+  .messenger-launcher {
+    right: calc(16px + env(safe-area-inset-right, 0px));
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+  .messenger-launcher__button {
+    width: 56px;
+    height: 56px;
+    padding: 16px;
+    border-radius: 50%;
+    box-shadow:
+      0 3px 5px -1px #0003,
+      0 6px 10px #00000024,
+      0 1px 18px #0000001f;
+    overflow: hidden;
+  }
+  .messenger-launcher__button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: #fff;
+    opacity: 0;
+    transition: opacity 120ms;
+  }
+  .messenger-launcher__button:active::after {
+    opacity: 0.2;
+  }
+  .messenger-launcher__plus {
+    display: block;
+    flex-shrink: 0;
+  }
+  .messenger-launcher__label {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .messenger-launcher__button::after {
+    transition: none;
+  }
+}

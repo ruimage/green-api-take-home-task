@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+}
+
+.shell-preview-empty h3 {
+  margin: 0;
+}
+
+.shell-preview-empty {
+  min-height: 100%;
+  padding: var(--spacing-size4xl);
+  text-align: center;
+}
+
+.shell-preview-overflow {
+  padding-block: var(--spacing-size4xl);
+}

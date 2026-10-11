@@ -1,0 +1,1586 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>UI-референс — Список рядом</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --paper: light-dark(#fff, #181818);
+        --ink: light-dark(#252525, #eee);
+        --line: light-dark(#ddd, #555);
+        --muted: light-dark(#666, #bbb);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 24px;
+        max-width: 1200px;
+        margin-inline: auto;
+        background: var(--paper);
+        color: var(--ink);
+        font:
+          15px/1.5 "Segoe UI",
+          sans-serif;
+      }
+      h1 {
+        font-size: 24px;
+        font-weight: 500;
+        margin: 0 0 8px;
+      }
+      h2,
+      h3 {
+        font-weight: 500;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:disabled {
+        cursor: default;
+      }
+      .btn,
+      .form-select {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 8px 12px;
+        background: var(--paper);
+        color: var(--ink);
+        max-width: 100%;
+        white-space: normal;
+      }
+      .btn:disabled {
+        opacity: 0.45;
+      }
+      .form-select {
+        width: 100%;
+      }
+      .form-label {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-width: 0;
+        flex: 1 1 230px;
+      }
+      .viz-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin: 20px 0;
+      }
+      .text-small {
+        font-size: 13px;
+      }
+      .cursor-interaction {
+        cursor: pointer;
+      }
+      .viz-dotted-background {
+        background-image: radial-gradient(var(--line) 1px, transparent 1px);
+        background-size: 12px 12px;
+      }
+      .reference-intro {
+        margin: 0;
+        color: var(--muted);
+      }
+      @media (max-width: 600px) {
+        body {
+          padding: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>UI-референс · Список рядом</h1>
+    <p class="reference-intro">
+      Выберите экран и состояние, чтобы сравнить полноэкранную версию, виджет и телефон. Ниже —
+      атлас всех состояний с описанием поведения.
+    </p>
+    <div id="messenger-sketchbook" aria-label="Атлас мессенджера: список рядом">
+      <div class="viz-controls" aria-label="Просмотр экранов и состояний">
+        <label class="form-label">Экран<select class="form-select" id="ms-screen"></select></label>
+        <label class="form-label"
+          >Состояние<select class="form-select" id="ms-state"></select
+        ></label>
+        <button type="button" class="btn" id="ms-prev">Предыдущее состояние</button>
+        <button type="button" class="btn" id="ms-next">Следующее состояние</button>
+      </div>
+      <div class="ms-caption" aria-live="polite">
+        <span id="ms-current"></span><span class="text-small" id="ms-behavior"></span>
+      </div>
+      <div id="ms-designs" aria-label="Список рядом">
+        <section
+          data-variant="Список рядом"
+          aria-label="Список рядом: список и диалог"
+          data-design="classic"
+        >
+          <div class="ms-design-title">
+            <h3>Список рядом</h3>
+            <span class="text-small"
+              >Два столбца на большом экране · переходы вперёд и назад в компактном</span
+            >
+          </div>
+          <div class="ms-product-set" aria-label="Список рядом — отступы">
+            <div class="ms-format-heading">Полноэкранный вариант</div>
+            <div class="ms-desktop-preview" data-preview="desktop"></div>
+            <div class="ms-devices">
+              <div class="ms-device-column">
+                <div class="ms-format-heading">Виджет · 400 × 640</div>
+                <div class="ms-compact-stage viz-dotted-background">
+                  <div class="ms-widget-preview" data-preview="widget"></div>
+                </div>
+              </div>
+              <div class="ms-device-column">
+                <div class="ms-format-heading">Телефон · 360 × 700</div>
+                <div class="ms-compact-stage viz-dotted-background">
+                  <div class="ms-mobile-preview" data-preview="mobile"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <hr />
+      <div class="ms-atlas-heading">
+        <h3>Оформление всех состояний</h3>
+        <label class="form-label"
+          >Формат атласа<select class="form-select" id="ms-atlas-format">
+            <option value="desktop">Полноэкранный</option>
+            <option value="widget">Виджет</option>
+            <option value="mobile">Телефон</option>
+          </select></label
+        >
+      </div>
+      <div class="text-small" id="ms-atlas-label"></div>
+      <div id="ms-atlas"></div>
+    </div>
+    <style>
+      #messenger-sketchbook {
+        color-scheme: light dark;
+      }
+      #messenger-sketchbook [hidden] {
+        display: none !important;
+      }
+      #messenger-sketchbook .ms-caption {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 22px;
+        align-items: baseline;
+        margin: 14px 0 18px;
+      }
+      #messenger-sketchbook .ms-design-title {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        align-content: flex-start;
+        min-height: 66px;
+        gap: 8px 18px;
+        margin-bottom: 15px;
+        padding-right: 96px;
+      }
+      #messenger-sketchbook .ms-design-title h3 {
+        margin: 0;
+      }
+      #messenger-sketchbook .ms-format-heading {
+        margin: 14px 0 8px;
+      }
+      #messenger-sketchbook .ms-desktop-preview {
+        height: 600px;
+      }
+      #messenger-sketchbook .ms-devices {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 30px;
+        margin-top: 16px;
+      }
+      #messenger-sketchbook .ms-device-column {
+        flex: 0 1 400px;
+        min-width: 0;
+        max-width: 100%;
+      }
+      #messenger-sketchbook .ms-device-column:first-child {
+        flex-basis: 424px;
+      }
+      #messenger-sketchbook .ms-compact-stage {
+        padding: 16px 12px;
+        display: flex;
+        justify-content: center;
+      }
+      #messenger-sketchbook .ms-widget-preview {
+        width: 400px;
+        max-width: 100%;
+        height: 640px;
+      }
+      #messenger-sketchbook .ms-mobile-preview {
+        width: 360px;
+        max-width: 100%;
+        height: 700px;
+      }
+      #messenger-sketchbook .ms-atlas-heading {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: center;
+        justify-content: space-between;
+      }
+      #messenger-sketchbook .ms-atlas-heading h3 {
+        margin: 0;
+      }
+      #messenger-sketchbook .ms-atlas-group {
+        margin: 26px 0;
+      }
+      #messenger-sketchbook .ms-atlas-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+        gap: 28px;
+      }
+      #messenger-sketchbook .ms-atlas-grid[data-format="desktop"] {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      #messenger-sketchbook .ms-atlas-screen {
+        --p-gap: 10px;
+        height: 600px;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+      #messenger-sketchbook .ms-atlas-screen.format-widget {
+        width: 400px;
+        height: 640px;
+      }
+      #messenger-sketchbook .ms-atlas-screen.format-mobile {
+        width: 360px;
+        height: 700px;
+      }
+      #messenger-sketchbook .ms-atlas-tile {
+        min-width: 0;
+      }
+      #messenger-sketchbook .ms-atlas-tile > button {
+        margin: 0 0 8px;
+      }
+      #messenger-sketchbook .ms-atlas-note {
+        margin-top: 7px;
+      }
+      #messenger-sketchbook .ms-product-set,
+      #messenger-sketchbook .ms-product-window,
+      #messenger-sketchbook .ms-atlas-surface {
+        --p-paper: light-dark(#fffdf6, #242622);
+        --p-ink: light-dark(#33372f, #eeeae0);
+        --p-muted: light-dark(#64675e, #b7b8ab);
+        --p-line: light-dark(#85867a, #949789);
+        --p-shade: light-dark(#efeee5, #383b33);
+        --p-error: light-dark(#914747, #eead9c);
+      }
+      #messenger-sketchbook .ms-product-set,
+      #messenger-sketchbook .ms-atlas-surface {
+        --p-gap: 10px;
+      }
+      #messenger-sketchbook .ms-product-window,
+      #messenger-sketchbook .ms-atlas-surface {
+        font-family: "Segoe Print", "Comic Sans MS", "Segoe UI", sans-serif;
+        font-size: 14px;
+        line-height: 1.4;
+        color: var(--p-ink);
+        background: var(--p-paper);
+      }
+      #messenger-sketchbook .ms-product-window *,
+      #messenger-sketchbook .ms-atlas-surface * {
+        box-sizing: border-box;
+      }
+      #messenger-sketchbook .ms-product-window {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border: 1.6px solid var(--p-ink);
+        border-radius: 3px 7px 4px 9px;
+        box-shadow: 2px 3px 0 var(--p-line);
+        position: relative;
+        min-width: 0;
+        overflow: hidden;
+      }
+      #messenger-sketchbook .ms-product-window.format-mobile {
+        border-radius: 0;
+        font-size: 15px;
+        box-shadow: none;
+      }
+      #messenger-sketchbook .p-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 12px 14px;
+        border-bottom: 1.4px solid var(--p-line);
+        flex: none;
+        min-height: 58px;
+      }
+      #messenger-sketchbook .p-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+      }
+      #messenger-sketchbook .p-brand > span:last-child {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+      #messenger-sketchbook .p-logo {
+        flex: none;
+      }
+      #messenger-sketchbook .p-logo {
+        border: 1.5px solid var(--p-ink);
+        border-radius: 11px 6px 8px 5px;
+        padding: 4px 8px;
+        transform: rotate(-2deg);
+        font-weight: 500;
+      }
+      #messenger-sketchbook .p-small {
+        font-size: 12px;
+        line-height: 1.45;
+        color: var(--p-muted);
+      }
+      #messenger-sketchbook .p-actions {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      #messenger-sketchbook .p-button {
+        font: inherit;
+        font-weight: 400;
+        color: var(--p-ink);
+        background: var(--p-paper);
+        padding: 7px 10px;
+        min-height: 36px;
+        border: 1.3px solid var(--p-line);
+        border-radius: 3px 7px 3px 5px;
+        max-width: 100%;
+        white-space: normal;
+      }
+      #messenger-sketchbook .p-button.primary {
+        border: 1.7px solid var(--p-ink);
+        background: var(--p-shade);
+        font-weight: 500;
+        box-shadow: 1px 2px 0 var(--p-line);
+      }
+      #messenger-sketchbook .p-button.plain {
+        border-color: transparent;
+        background: transparent;
+        box-shadow: none;
+        padding: 5px 6px;
+      }
+      #messenger-sketchbook .p-button:disabled {
+        opacity: 0.5;
+      }
+      #messenger-sketchbook .p-button.icon {
+        flex: none;
+        min-width: 36px;
+      }
+      #messenger-sketchbook .p-button.primary.p-new-chat-circle {
+        position: absolute;
+        right: 16px;
+        bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+        width: 56px;
+        height: 56px;
+        min-height: 56px;
+        padding: 0;
+        border-radius: 50%;
+        font-size: 28px;
+        line-height: 1;
+        box-shadow: 2px 3px 0 var(--p-line);
+      }
+      #messenger-sketchbook .p-main.has-new-chat-fab {
+        position: relative;
+      }
+      #messenger-sketchbook .p-main.has-new-chat-fab > .p-content {
+        padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+      }
+      #messenger-sketchbook .p-shell {
+        flex: 1;
+        min-height: 0;
+        min-width: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      #messenger-sketchbook .p-main {
+        min-width: 0;
+        min-height: 0;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: var(--p-paper);
+      }
+      #messenger-sketchbook .p-local-head {
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--p-line);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: none;
+        min-width: 0;
+      }
+      #messenger-sketchbook .p-local-title {
+        flex: 1;
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+      #messenger-sketchbook .p-heading {
+        font-size: 18px;
+        font-weight: 500;
+        margin: 0;
+      }
+      #messenger-sketchbook .p-content {
+        padding: var(--p-gap) 14px;
+        min-width: 0;
+        min-height: 0;
+        flex: 1;
+        overflow: auto;
+      }
+      #messenger-sketchbook .p-form {
+        max-width: 380px;
+        margin: 10px auto;
+      }
+      #messenger-sketchbook .p-field {
+        display: block;
+        margin: 13px 0;
+      }
+      #messenger-sketchbook .p-field-name {
+        display: block;
+        margin-bottom: 5px;
+      }
+      #messenger-sketchbook .p-input {
+        font: inherit;
+        color: var(--p-ink);
+        background: var(--p-paper);
+        border: 1.4px solid var(--p-line);
+        border-radius: 5px 2px 6px 3px;
+        width: 100%;
+        padding: 9px 10px;
+        min-width: 0;
+        min-height: 42px;
+      }
+      #messenger-sketchbook .p-input:disabled {
+        background: var(--p-shade);
+        color: var(--p-muted);
+      }
+      #messenger-sketchbook .p-input.invalid {
+        border: 1.8px dashed var(--p-error);
+      }
+      #messenger-sketchbook .p-error {
+        color: var(--p-error);
+      }
+      #messenger-sketchbook .p-notice {
+        padding: 9px 11px;
+        border: 1.2px dashed var(--p-line);
+        background: var(--p-shade);
+        border-radius: 7px 2px 6px 4px;
+        margin: 10px 0;
+        font-size: 13px;
+      }
+      #messenger-sketchbook .p-notice.error {
+        border-color: var(--p-error);
+        color: var(--p-error);
+      }
+      #messenger-sketchbook .p-empty {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        padding: 20px;
+        text-align: center;
+        min-height: 190px;
+      }
+      #messenger-sketchbook .p-empty-drawing {
+        width: 70px;
+        height: 54px;
+        border: 1.4px dashed var(--p-line);
+        border-radius: 13px 7px 5px 11px;
+        transform: rotate(-3deg);
+        display: grid;
+        place-items: center;
+        color: var(--p-muted);
+      }
+      #messenger-sketchbook .p-footer {
+        padding: 10px 14px;
+        border-top: 1.2px solid var(--p-line);
+        flex: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      #messenger-sketchbook .p-footer:empty {
+        display: none;
+      }
+      #messenger-sketchbook .p-avatar {
+        width: 34px;
+        height: 34px;
+        border: 1.3px solid var(--p-line);
+        border-radius: 45% 52% 42% 50%;
+        display: grid;
+        place-items: center;
+        flex: none;
+        color: var(--p-muted);
+      }
+      #messenger-sketchbook .p-rows {
+        display: flex;
+        flex-direction: column;
+        gap: var(--p-gap);
+      }
+      #messenger-sketchbook .p-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 8px;
+        border-bottom: 1px solid var(--p-line);
+        width: 100%;
+        background: var(--p-paper);
+        text-align: left;
+        font: inherit;
+        color: var(--p-ink);
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        min-width: 0;
+      }
+      #messenger-sketchbook .p-row.selected {
+        border: 1.5px dashed var(--p-ink);
+        border-radius: 5px 3px 6px 3px;
+        background: var(--p-shade);
+      }
+      #messenger-sketchbook .p-row > span:last-child {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+      #messenger-sketchbook .p-row:disabled {
+        opacity: 0.65;
+      }
+      #messenger-sketchbook .p-skeleton {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 12px 0;
+      }
+      #messenger-sketchbook .p-skeleton .p-avatar {
+        background: repeating-linear-gradient(-32deg, var(--p-paper) 0 5px, var(--p-shade) 5px 7px);
+      }
+      #messenger-sketchbook .p-skeleton-lines {
+        flex: 1;
+        display: grid;
+        gap: 8px;
+      }
+      #messenger-sketchbook .p-skeleton-lines span {
+        height: 9px;
+        border-top: 2px solid var(--p-line);
+        opacity: 0.6;
+        width: 80%;
+      }
+      #messenger-sketchbook .p-skeleton-lines span:last-child {
+        width: 45%;
+      }
+      #messenger-sketchbook .p-messages {
+        display: flex;
+        flex-direction: column;
+        gap: var(--p-gap);
+        padding: 8px 0;
+      }
+      #messenger-sketchbook .p-bubble {
+        max-width: 85%;
+        padding: 8px 11px;
+        border: 1.3px solid var(--p-line);
+        border-radius: 4px 13px 11px 3px;
+        align-self: flex-start;
+        overflow-wrap: anywhere;
+      }
+      #messenger-sketchbook .p-bubble.outgoing {
+        align-self: flex-end;
+        border-radius: 12px 4px 3px 11px;
+        background: var(--p-shade);
+      }
+      #messenger-sketchbook .p-bubble.failed {
+        border: 1.5px dashed var(--p-error);
+      }
+      #messenger-sketchbook .p-delivery {
+        display: block;
+        text-align: right;
+        margin-top: 5px;
+        font-size: 12px;
+        color: var(--p-muted);
+      }
+      #messenger-sketchbook .p-delivery.failed {
+        color: var(--p-error);
+      }
+      #messenger-sketchbook .p-composer {
+        display: flex;
+        gap: 8px;
+        align-items: flex-end;
+        padding: 10px 14px;
+        border-top: 1.4px solid var(--p-line);
+        flex: none;
+        background: var(--p-paper);
+      }
+      #messenger-sketchbook .p-composer textarea {
+        resize: none;
+        min-height: 52px;
+        height: 60px;
+      }
+      #messenger-sketchbook .p-composer .p-button {
+        flex: none;
+      }
+      #messenger-sketchbook .p-keyboard {
+        flex: none;
+        padding: 8px;
+        background: var(--p-shade);
+        border-top: 1.3px solid var(--p-line);
+        text-align: center;
+        font-size: 14px;
+        line-height: 2.1;
+        letter-spacing: 4px;
+      }
+      #messenger-sketchbook .p-host {
+        flex: 1;
+        padding: 30px 22px;
+        position: relative;
+        background: var(--p-paper);
+      }
+      #messenger-sketchbook .p-host-lines {
+        display: grid;
+        gap: 17px;
+        margin-top: 30px;
+      }
+      #messenger-sketchbook .p-host-lines span {
+        width: 76%;
+        height: 12px;
+        border-top: 2px solid var(--p-line);
+        opacity: 0.3;
+      }
+      #messenger-sketchbook .p-host-lines span:nth-child(2) {
+        width: 52%;
+      }
+      #messenger-sketchbook .p-launcher {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        transform: rotate(-1deg);
+      }
+      #messenger-sketchbook .p-context {
+        min-height: 0;
+        overflow: hidden;
+        padding: 12px;
+        background: var(--p-paper);
+      }
+      #messenger-sketchbook .p-context-label {
+        padding: 6px 0 14px;
+        color: var(--p-muted);
+      }
+      #messenger-sketchbook .classic-split {
+        display: grid;
+        grid-template-columns: 230px minmax(0, 1fr);
+      }
+      #messenger-sketchbook .classic-split > .p-context {
+        border-right: 1.5px solid var(--p-line);
+      }
+      #messenger-sketchbook .ms-atlas-surface {
+        padding: 12px;
+        border: 1.4px solid var(--p-line);
+        border-radius: 7px 3px 8px 3px;
+        min-width: 0;
+      }
+      #messenger-sketchbook .ms-atlas-surface .p-content {
+        padding: 8px 0;
+        overflow: visible;
+      }
+      #messenger-sketchbook .ms-atlas-surface .p-main {
+        min-height: 280px;
+      }
+      #messenger-sketchbook .ms-atlas-surface .p-head {
+        padding: 6px 0;
+      }
+      #messenger-sketchbook .ms-atlas-surface .p-local-head {
+        padding: 8px 0;
+      }
+      #messenger-sketchbook .ms-atlas-surface .p-footer,
+      #messenger-sketchbook .ms-atlas-surface .p-composer {
+        padding: 9px 0;
+      }
+      #messenger-sketchbook .ms-atlas-surface .p-heading {
+        font-size: 16px;
+      }
+      #messenger-sketchbook .ms-atlas-surface .p-empty {
+        min-height: 160px;
+      }
+      #messenger-sketchbook .ms-atlas-surface .p-button {
+        min-height: 36px;
+      }
+      #messenger-sketchbook .ms-atlas-surface .p-bubble {
+        max-width: 94%;
+      }
+      #messenger-sketchbook .ms-atlas-surface[data-design="cards"] .p-rows {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      #messenger-sketchbook .ms-atlas-surface[data-design="cards"] .p-row {
+        flex-direction: column;
+        align-items: flex-start;
+        border: 1px solid var(--p-line);
+        border-radius: 6px;
+        padding: 8px;
+      }
+      #messenger-sketchbook .ms-atlas-surface.format-mobile .p-button {
+        min-height: 44px;
+      }
+      @media (max-width: 650px) {
+        #messenger-sketchbook .ms-design-title {
+          padding-right: 0;
+        }
+        #messenger-sketchbook .ms-compact-stage {
+          padding: 12px 0;
+        }
+        #messenger-sketchbook .classic-split {
+          grid-template-columns: 180px minmax(0, 1fr);
+        }
+        #messenger-sketchbook .classic-split .p-context {
+          padding: 7px;
+        }
+        #messenger-sketchbook .classic-split .p-row {
+          gap: 4px;
+          padding: 8px 3px;
+        }
+        #messenger-sketchbook .classic-split .p-avatar {
+          display: none;
+        }
+      }
+      @media (max-width: 430px) {
+        #messenger-sketchbook .ms-desktop-preview {
+          height: 610px;
+        }
+        #messenger-sketchbook .classic-split {
+          display: flex;
+        }
+        #messenger-sketchbook .classic-split > .p-context {
+          display: none;
+        }
+        #messenger-sketchbook .p-composer {
+          padding: 8px;
+          gap: 5px;
+        }
+        #messenger-sketchbook .p-head {
+          padding: 10px 9px;
+        }
+        #messenger-sketchbook .p-local-head {
+          padding: 9px;
+        }
+        #messenger-sketchbook .p-content {
+          padding: var(--p-gap) 10px;
+        }
+        #messenger-sketchbook .p-button {
+          padding: 7px 8px;
+        }
+      }
+      @media (pointer: coarse) {
+        #messenger-sketchbook .ms-product-window .p-button {
+          min-height: 44px;
+        }
+        #messenger-sketchbook .p-input {
+          font-size: 16px;
+        }
+      }
+    </style>
+    <script>
+      (() => {
+        const root = document.getElementById("messenger-sketchbook");
+        const catalog = [
+          {
+            id: "collapsed",
+            group: "Свёрнуто",
+            label: "Кнопка открытия",
+            path: "collapsed",
+            kind: "collapsed",
+            note: "Панель скрыта; открыть → форма подключения.",
+          },
+          {
+            id: "closed",
+            group: "Свёрнуто",
+            label: "После закрытия",
+            path: "collapsed",
+            kind: "collapsed",
+            note: "CLOSE завершает session; повторное открытие требует подключения.",
+          },
+          {
+            id: "connection-idle",
+            group: "Подключение",
+            label: "Пустая форма",
+            path: "opened.disconnected.idle",
+            kind: "connection",
+            note: "Подключить доступно только с заполненными полями.",
+          },
+          {
+            id: "connection-invalid",
+            group: "Подключение",
+            label: "Неверные / пустые поля",
+            path: "opened.disconnected.idle · local validation",
+            kind: "connection",
+            error: "Укажите ID инстанса и токен.",
+            note: "Локальная ошибка под полями; transport не вызывается.",
+          },
+          {
+            id: "connection-failed",
+            group: "Подключение",
+            label: "Ошибка проверки данных",
+            path: "opened.disconnected.failed",
+            kind: "connection",
+            error: "Данные подключения не прошли проверку. Исправьте поля.",
+            retained: true,
+            note: "Предложение: прежние поля только в памяти; новая попытка создаёт новое соединение.",
+          },
+          {
+            id: "connection-network",
+            group: "Подключение",
+            label: "Сетевая ошибка подключения",
+            path: "opened.disconnected.failed",
+            kind: "connection",
+            error: "Не удалось подключиться. Проверьте сеть и повторите.",
+            retained: true,
+            retry: true,
+            note: "Guarded RETRY использует retained credentials; не оживляет старый client.",
+          },
+          {
+            id: "session-fatal",
+            group: "Подключение",
+            label: "Сессия потеряна / fatal",
+            path: "opened.disconnected.failed · SESSION_FATAL",
+            kind: "connection",
+            error: "Сессия завершена. Введите данные и подключитесь снова.",
+            note: "Credentials и data очищены. Старый session ID не допускается.",
+          },
+          {
+            id: "disconnected",
+            group: "Подключение",
+            label: "После отключения",
+            path: "opened.disconnected.idle · DISCONNECT",
+            kind: "connection",
+            notice: "Соединение завершено.",
+            note: "Все session resources и credentials очищены.",
+          },
+          {
+            id: "connecting",
+            group: "Подключение",
+            label: "Проверка подключения",
+            path: "opened.session.connecting",
+            kind: "connection",
+            pending: true,
+            note: "Поля и повторная отправка формы заблокированы; отключение и закрытие доступны.",
+          },
+          {
+            id: "chats-loading",
+            group: "Чаты",
+            label: "Загрузка",
+            path: "opened.session.loadingChats.pending",
+            kind: "chats",
+            pending: true,
+            note: "Первый список: без BACK; только CLOSE / DISCONNECT.",
+          },
+          {
+            id: "chats-failed",
+            group: "Чаты",
+            label: "Ошибка с RETRY",
+            path: "opened.session.loadingChats.failed",
+            kind: "chats",
+            error: "Чаты не загрузились. Попробуйте ещё раз.",
+            retry: true,
+            note: "RETRY запускает новый read; предыдущий остановлен.",
+          },
+          {
+            id: "chats-unretryable",
+            group: "Чаты",
+            label: "Ошибка без безопасного RETRY",
+            path: "opened.session.loadingChats.failed · backOnly",
+            kind: "chats",
+            error: "Не удалось обработать список чатов. Переподключитесь.",
+            note: "Для первой загрузки нет предыдущего экрана; доступны отключение и закрытие.",
+          },
+          {
+            id: "chats-empty",
+            group: "Чаты",
+            label: "Успешный пустой список",
+            path: "opened.session.chats · data empty",
+            kind: "chats",
+            empty: true,
+            note: "Пустой успешный ответ; новый диалог доступен.",
+          },
+          {
+            id: "chats-ready",
+            group: "Чаты",
+            label: "Список личных и групповых чатов",
+            path: "opened.session.chats",
+            kind: "chats",
+            note: "Группы — только basic rendering; нет unread / lastSeen / read receipts.",
+          },
+          {
+            id: "contacts-loading",
+            group: "Контакты",
+            label: "Загрузка",
+            path: "opened.session.loadingContacts.pending",
+            kind: "contacts",
+            pending: true,
+            note: "ENTER_PHONE отменяет read; BACK из номера начнёт новую загрузку.",
+          },
+          {
+            id: "contacts-failed",
+            group: "Контакты",
+            label: "Ошибка с RETRY и вводом номера",
+            path: "opened.session.loadingContacts.failed",
+            kind: "contacts",
+            error: "Контакты недоступны. Повторите или введите номер.",
+            retry: true,
+            note: "Ошибка не блокирует номер; BACK из номера восстановит failed без invoke.",
+          },
+          {
+            id: "contacts-empty",
+            group: "Контакты",
+            label: "Успешный пустой список",
+            path: "opened.session.contactPicker · data empty",
+            kind: "contacts",
+            empty: true,
+            note: "Нет контактов; ручной номер остаётся доступным.",
+          },
+          {
+            id: "contacts-ready",
+            group: "Контакты",
+            label: "Готовый список контактов",
+            path: "opened.session.contactPicker",
+            kind: "contacts",
+            note: "Выбор контакта открывает его диалог и загружает историю.",
+          },
+          {
+            id: "phone-editing",
+            group: "Новый диалог",
+            label: "Ввод номера · сразу из списка чатов",
+            path: "opened.session.newChat.editing",
+            kind: "phone",
+            origin: "chats",
+            note: "Новый диалог сразу открывает форму. Список чатов не меняется, выделение отсутствует; BACK возвращает прежний список.",
+          },
+          {
+            id: "phone-from-loading",
+            group: "Новый диалог",
+            label: "Ввод номера · возврат к загрузке",
+            path: "opened.session.newChat.editing · origin contactsPending",
+            kind: "phone",
+            origin: "pending",
+            notice: "Список контактов пока не загружен.",
+            note: "BACK → новый getContacts; прежний response игнорируется.",
+          },
+          {
+            id: "phone-from-error",
+            group: "Новый диалог",
+            label: "Ввод номера · возврат к ошибке",
+            path: "opened.session.newChat.editing · origin contactsFailed",
+            kind: "phone",
+            origin: "failed",
+            notice: "Можно начать диалог без списка контактов.",
+            note: "BACK → прежняя ошибка контактов, без скрытой загрузки.",
+          },
+          {
+            id: "phone-invalid",
+            group: "Новый диалог",
+            label: "Локальная ошибка номера",
+            path: "opened.session.newChat.editing · local validation",
+            kind: "phone",
+            origin: "chats",
+            error: "Укажите номер с «+» и кодом страны.",
+            note: "Ошибка рядом с полем; resolver и history не запускаются. Список чатов не меняется.",
+          },
+          {
+            id: "phone-resolving",
+            group: "Новый диалог",
+            label: "Разрешение номера",
+            path: "opened.session.newChat.resolving",
+            kind: "phone",
+            origin: "chats",
+            pending: true,
+            note: "Изменение номера и повторный OPEN_CHAT заблокированы. В списке ничего не добавляется и не выделяется.",
+          },
+          {
+            id: "phone-failed",
+            group: "Новый диалог",
+            label: "Ошибка открытия номера",
+            path: "opened.session.newChat.failed",
+            kind: "phone",
+            origin: "chats",
+            error: "Не удалось открыть диалог по этому номеру.",
+            retry: true,
+            note: "Повтор используется для предыдущего номера; исправленный номер открывается новой попыткой. Список чатов не меняется.",
+          },
+          {
+            id: "history-loading",
+            group: "Переписка",
+            label: "Загрузка истории",
+            path: "opened.session.loadingConversation.pending",
+            kind: "conversation",
+            pending: true,
+            note: "Composer disabled; BACK сохраняет session и отменяет history.",
+          },
+          {
+            id: "history-failed",
+            group: "Переписка",
+            label: "Ошибка истории с RETRY",
+            path: "opened.session.loadingConversation.failed",
+            kind: "conversation",
+            error: "История не загрузилась. Можно повторить.",
+            retry: true,
+            note: "RETRY по activeChat, в том числе для номера вне getChats.",
+          },
+          {
+            id: "history-unretryable",
+            group: "Переписка",
+            label: "Ошибка истории без RETRY",
+            path: "opened.session.loadingConversation.failed · backOnly",
+            kind: "conversation",
+            error: "Историю не удалось обработать. Вернитесь к чатам.",
+            note: "BACK доступен; нового read без команды не происходит.",
+          },
+          {
+            id: "conversation-empty",
+            group: "Переписка",
+            label: "Пустой новый диалог",
+            path: "opened.session.conversation · data empty",
+            kind: "conversation",
+            empty: true,
+            note: "Успешная пустая history; можно отправить первый текст.",
+          },
+          {
+            id: "conversation-ready",
+            group: "Переписка",
+            label: "Входящие и статусы исходящих",
+            path: "opened.session.conversation",
+            kind: "conversation",
+            note: "Входящее, отправка, успех и ошибка различаются подписью и оформлением.",
+          },
+          {
+            id: "message-incoming",
+            group: "Переписка",
+            label: "Новое входящее сообщение",
+            path: "opened.session.conversation · incoming event",
+            kind: "conversation",
+            delivery: "incoming",
+            note: "Новое сообщение не меняет draft и не крадёт focus.",
+          },
+          {
+            id: "message-sending",
+            group: "Переписка",
+            label: "Сообщение отправляется",
+            path: "opened.session.conversation · message sending",
+            kind: "conversation",
+            delivery: "sending",
+            note: "Текст сразу виден; отправка продолжается при возврате к списку чатов.",
+          },
+          {
+            id: "message-sent",
+            group: "Переписка",
+            label: "Отправка подтверждена",
+            path: "opened.session.conversation · message sent",
+            kind: "conversation",
+            delivery: "sent",
+            note: "«Отправлено» не означает «Прочитано».",
+          },
+          {
+            id: "message-failed",
+            group: "Переписка",
+            label: "Ошибка отправки",
+            path: "opened.session.conversation · message failed",
+            kind: "conversation",
+            delivery: "failed",
+            note: "Automatic resend отсутствует; manual resend пока не включён в MVP.",
+          },
+          {
+            id: "polling-backoff",
+            group: "Переписка",
+            label: "Receive backoff · временно нет сети",
+            path: "opened.session.conversation · consumer backoff",
+            kind: "conversation",
+            notice: "Связь прервалась. Получение сообщений восстановится автоматически.",
+            note: "История и draft остаются; это внутреннее состояние consumer, не новый экран.",
+          },
+          {
+            id: "ack-backoff",
+            group: "Переписка",
+            label: "Ошибка ack · подтверждение повторяется",
+            path: "opened.session.conversation · ack recovery",
+            kind: "conversation",
+            notice: "Подтверждаем получение. Возможна задержка новых сообщений.",
+            note: "Предложение retry того же receipt; один receive, сообщение не дублируется.",
+          },
+          {
+            id: "mobile-keyboard",
+            group: "Переписка",
+            label: "Ввод с экранной клавиатурой",
+            path: "opened.session.conversation · presentation keyboard",
+            kind: "conversation",
+            keyboard: true,
+            note: "Условная клавиатура показана на телефоне; composer остаётся над ней.",
+          },
+          {
+            id: "long-content",
+            group: "Переписка",
+            label: "Длинное имя и текст",
+            path: "opened.session.conversation · long data",
+            kind: "conversation",
+            long: true,
+            note: "Перенос строк без горизонтального overflow; group — basic rendering.",
+          },
+        ];
+        const designs = { classic: { name: "Список рядом" } };
+        const screenSelect = root.querySelector("#ms-screen"),
+          stateSelect = root.querySelector("#ms-state"),
+          atlasSelect = root.querySelector("#ms-atlas-format");
+        const savedSnapshot = globalThis.openai?.widgetState;
+        const saved = savedSnapshot?.modelContent;
+        let current =
+          catalog.find((s) => s.id === saved?.state) ||
+          catalog.find((s) => s.id === "conversation-ready");
+        let atlasFormat = ["desktop", "widget", "mobile"].includes(saved?.atlasFormat)
+          ? saved.atlasFormat
+          : "desktop";
+        let activeDesign = "classic",
+          phoneOrigin = ["chats", "ready", "pending", "failed"].includes(
+            savedSnapshot?.privateContent?.phoneOrigin,
+          )
+            ? savedSnapshot.privateContent.phoneOrigin
+            : "chats",
+          newChatReturnState = "chats-ready",
+          atlasSignature = "",
+          submittedPhone = "+1 202 555 0100";
+        const esc = (value) =>
+          String(value).replace(
+            /[&<>"']/g,
+            (char) =>
+              ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char],
+          );
+        const button = (label, action, cls = "", disabled = false) =>
+          `<button type="button" class="p-button cursor-interaction ${cls}" ${action ? `data-action="${action}"` : ""} ${["close", "back-chats", "back-phone", "new-chat"].includes(action) ? `aria-label="${{ close: "Закрыть мессенджер", "back-chats": "Назад к чатам", "back-phone": "Назад к выбору получателя", "new-chat": "Новый диалог" }[action]}"` : ""} ${disabled ? "disabled" : ""}>${esc(label)}</button>`;
+        const notice = (text, error = false) =>
+          `<div class="p-notice ${error ? "error" : ""}" role="${error ? "alert" : "status"}">${esc(text)}</div>`;
+        const groups = [...new Set(catalog.map((s) => s.group))];
+        screenSelect.innerHTML = groups.map((g) => `<option>${esc(g)}</option>`).join("");
+        atlasSelect.value = atlasFormat;
+        function activeVariant() {
+          return (
+            [...root.querySelectorAll("[data-design][data-variant]")].find((v) => !v.hidden)
+              ?.dataset.design || "classic"
+          );
+        }
+        function save() {
+          if (globalThis.openai?.setWidgetState)
+            globalThis.openai
+              .setWidgetState({
+                modelContent: {
+                  state: current.id,
+                  screen: current.group,
+                  layout: designs[activeVariant()].name,
+                  atlasFormat,
+                },
+                privateContent: { phoneOrigin },
+              })
+              .catch(() => {});
+        }
+        function skeleton() {
+          return `<div role="status"><div class="p-small">Загружаем…</div>${[1, 2, 3].map(() => '<div class="p-skeleton"><span class="p-avatar"></span><span class="p-skeleton-lines"><span></span><span></span></span></div>').join("")}</div>`;
+        }
+        function empty(title, subtitle) {
+          return `<div class="p-empty"><div class="p-empty-drawing" aria-hidden="true">···</div><div>${esc(title)}</div><div class="p-small">${esc(subtitle)}</div></div>`;
+        }
+        function rows(contacts = false, context = false, allowSelect = false) {
+          const names = contacts ? ["Анна", "Илья", "Саша"] : ["Анна", "Илья", "Проект"];
+          return `<div class="p-rows">${names.map((name, index) => `<button type="button" class="p-row cursor-interaction ${context && allowSelect && index === 0 ? "selected" : ""}" data-action="${contacts ? "select-contact" : "select-chat"}" ${context && !allowSelect ? "disabled" : ""}><span class="p-avatar">${name[0]}</span><span>${name}<span class="p-small" style="display:block">${contacts ? "Контакт" : index === 2 ? "Группа" : "Личный диалог"}</span></span></button>`).join("")}</div>`;
+        }
+        function backAction(state) {
+          if (state.kind === "contacts") return "back-chats";
+          if (state.kind === "phone") return "back-phone";
+          if (state.kind === "conversation") return "back-chats";
+          return null;
+        }
+        function title(state) {
+          return (
+            {
+              connection: "Подключение",
+              chats: "Чаты",
+              contacts: "Новый диалог",
+              phone: "Номер телефона",
+              conversation: state.long ? "Обсуждение проекта и следующих шагов" : "Анна",
+            }[state.kind] || "Мессенджер"
+          );
+        }
+        function footerActions(state) {
+          let actions = [];
+          if (state.kind === "connection" && state.pending)
+            actions.push(button("Отключить", "disconnect"));
+          if (state.kind === "chats" && (state.error || state.pending))
+            actions.push(button("Отключить", "disconnect"));
+          if (state.retry && state.kind !== "connection" && state.kind !== "phone")
+            actions.push(button("Повторить", "retry", "primary"));
+          return actions.join("");
+        }
+        function form(state, ns) {
+          const pending = state.pending;
+          const retained = state.retained || pending;
+          const invalid = state.id === "connection-invalid";
+          return `<div class="p-form">
+  <div class="p-heading">Подключить мессенджер</div><div class="p-small">Данные нужны только на время сессии</div>
+  ${state.error ? notice(state.error, true) : ""}${state.notice ? notice(state.notice) : ""}
+  <label class="p-field" for="${ns}-id"><span class="p-field-name">ID инстанса</span><input class="p-input ${invalid ? "invalid" : ""}" id="${ns}-id" data-credential="id" placeholder="Введите ID" value="${retained ? "demo-instance" : ""}" ${pending ? "disabled" : ""} autocomplete="off"></label>
+  <label class="p-field" for="${ns}-token"><span class="p-field-name">Токен</span><input class="p-input ${invalid ? "invalid" : ""}" id="${ns}-token" data-credential="token" type="password" placeholder="Введите токен" value="${retained ? "demo-token" : ""}" ${pending ? "disabled" : ""} autocomplete="off"></label>
+  ${pending ? notice("Проверяем подключение…") : ""}
+  <div class="p-actions">${button(pending ? "Проверяем…" : "Подключиться", "connect", "primary", pending || !retained)}${state.retry ? button("Повторить", "retry") : ""}</div>
+ </div>`;
+        }
+        function phoneForm(state, ns) {
+          const failed = state.id === "phone-failed";
+          return `<div class="p-form"><div class="p-heading">Начать по номеру</div><div class="p-small">Введите международный номер с «+»</div>
+  ${state.notice ? notice(state.notice) : ""}${state.error ? notice(state.error, true) : ""}
+  <label class="p-field" for="${ns}-phone"><span class="p-field-name">Номер телефона</span><input class="p-input ${state.id === "phone-invalid" ? "invalid" : ""}" id="${ns}-phone" data-phone placeholder="+ код страны и номер" value="${state.id === "phone-invalid" ? "12345" : state.pending || failed ? esc(submittedPhone) : ""}" ${state.pending ? "disabled" : ""} inputmode="tel"></label>
+  ${state.pending ? notice("Открываем диалог…") : ""}
+  <div class="p-actions">${button(state.pending ? "Открываем…" : "Открыть диалог", "open-phone", "primary", !!state.pending)}${failed ? button("Повторить номер", "retry") : ""}</div>
+  ${failed ? '<div class="p-small" style="margin-top:12px">Повтор — для предыдущего номера. Исправленный номер откройте новой попыткой.</div>' : ""}
+ </div>`;
+        }
+        function bubble(text, direction = "incoming", status = null) {
+          return `<div class="p-bubble ${direction === "outgoing" ? "outgoing" : ""} ${status === "failed" ? "failed" : ""}">${esc(text)}${status ? `<span class="p-delivery ${status === "failed" ? "failed" : ""}">${{ sending: "◌ Отправляется…", sent: "✓ Отправлено", failed: "! Ошибка отправки" }[status]}</span>` : '<span class="p-delivery">10:24</span>'}</div>`;
+        }
+        function messages(state) {
+          if (state.long)
+            return `<div class="p-messages">${bubble("Длинный текст переносится внутри сообщения. Договоримся о последовательности действий и проверим, что название чата, ввод и кнопка отправки остаются доступными даже при нескольких строках. Эта переписка — пример оформления, а не реальные данные.")}${bubble("Получил, подготовлю ответ.", "outgoing", "sent")}</div>`;
+          const basic =
+            bubble("Привет! Когда удобно обсудить задачу?") +
+            bubble("Сегодня после обеда.", "outgoing", "sent");
+          if (state.keyboard)
+            return `<div class="p-messages">${bubble("Напиши, когда будешь готов.")}</div>`;
+          if (state.delivery === "incoming")
+            return `<div class="p-messages">${basic}${bubble("Хорошо, буду на связи.")}</div>`;
+          if (state.delivery)
+            return `<div class="p-messages">${basic}${bubble("Давайте в 15:00.", "outgoing", state.delivery)}</div>`;
+          if (state.id === "conversation-ready")
+            return `<div class="p-messages">${bubble("Можно уточнить детали?")}${bubble("Да, отправлю сейчас.", "outgoing", "sent")}${bubble("Первый пункт…", "outgoing", "sending")}${bubble("Дополнение к ответу.", "outgoing", "failed")}</div>`;
+          return `<div class="p-messages">${basic}</div>`;
+        }
+        function composer(state, ns) {
+          const disabled = !!state.pending || !!state.error;
+          const draft = state.keyboard ? "Сейчас напишу ответ" : "";
+          return `<div class="p-composer"><label class="p-field" style="margin:0;flex:1;min-width:0" for="${ns}-draft"><span class="p-small">Сообщение</span><textarea class="p-input" id="${ns}-draft" data-draft placeholder="Написать сообщение…" ${disabled ? "disabled" : ""}>${draft}</textarea></label>${button("Отправить", "send", "primary", disabled || !draft)}</div>${state.keyboard ? '<div class="p-keyboard" aria-label="Условная экранная клавиатура">й ц у к е н г ш щ<br>ф ы в а п р о л д<br>я ч с м и т ь б ю<br><span class="p-small">ПРОБЕЛ ↵</span></div>' : ""}`;
+        }
+        function component(state, design, format, ns, atlas = false) {
+          const bk = backAction(state);
+          const mobileKeyboard = state.keyboard && format === "mobile";
+          const visual = { ...state, keyboard: mobileKeyboard };
+          let content = "";
+          if (state.kind === "connection") content = form(state, ns);
+          if (state.kind === "phone") content = phoneForm(state, ns);
+          if (state.kind === "chats" || state.kind === "contacts") {
+            if (state.pending) content = skeleton();
+            else if (state.error)
+              content =
+                notice(state.error, true) +
+                empty("Нет данных для списка", "Существующая сессия сохраняется");
+            else if (state.empty)
+              content = empty(
+                state.kind === "chats" ? "Пока нет чатов" : "Список контактов пуст",
+                state.kind === "chats" ? "Начните новый диалог" : "Можно ввести номер вручную",
+              );
+            else content = rows(state.kind === "contacts");
+          }
+          if (state.kind === "conversation") {
+            if (state.pending)
+              content = skeleton() + empty("Загружаем историю", "Можно вернуться к чатам");
+            else if (state.error)
+              content =
+                notice(state.error, true) + empty("История недоступна", "Текущий диалог выбран");
+            else if (state.empty)
+              content = empty("Пока нет сообщений", "Напишите первое сообщение");
+            else content = (state.notice ? notice(state.notice) : "") + messages(visual);
+          }
+          const canStartChat = state.kind === "chats" && !state.pending && !state.error;
+          const mobileFab = canStartChat && format === "mobile";
+          const firstAction =
+            canStartChat && !mobileFab
+              ? button("＋ Новый диалог", "new-chat", "primary")
+              : state.kind === "contacts"
+                ? button("Ввести номер", "enter-phone", state.empty || state.error ? "primary" : "")
+                : "";
+          const head =
+            state.kind === "connection"
+              ? ""
+              : `<div class="p-local-head">${bk ? button("←", "" + bk, "plain icon") : ""}<span class="p-local-title">${title(state)}${state.kind === "conversation" ? '<span class="p-small" style="display:block">' + (state.long ? "Группа" : "Личный диалог") + "</span>" : ""}</span>${firstAction}</div>`;
+          const actions = footerActions(state, design);
+          const keyboard =
+            state.keyboard && !mobileKeyboard
+              ? '<div class="p-small" style="padding:0 14px 8px">Поле в фокусе · клавиатура показана в мобильном варианте</div>'
+              : "";
+          return `<div class="p-main ${mobileFab ? "has-new-chat-fab" : ""}">${head}<div class="p-content">${content}</div>${actions ? `<div class="p-footer">${actions}</div>` : ""}${state.kind === "conversation" ? composer(visual, ns) : ""}${keyboard}${mobileFab ? button("+", "new-chat", "primary p-new-chat-circle") : ""}</div>`;
+        }
+        function context(state, allow = false) {
+          return `<aside class="p-context"><div class="p-context-label">Чаты</div>${state.kind === "phone" && state.listEmpty ? empty("Пока нет чатов", "Начните новый диалог") : rows(false, true, allow)}</aside>`;
+        }
+        function screen(state, design, format, ns) {
+          if (state.kind === "collapsed")
+            return `<div class="ms-product-window format-${format}" data-format="${format}" data-design="${design}" data-state="${state.id}"><div class="p-host"><div class="p-small">Страница сайта</div><div class="p-host-lines">${[1, 2, 3, 4, 5].map(() => "<span></span>").join("")}</div><div class="p-launcher">${button("Открыть мессенджер", "open", "primary")}</div></div></div>`;
+          const session = state.kind !== "connection";
+          const status =
+            state.pending && state.kind === "connection"
+              ? "Подключение…"
+              : session
+                ? "Подключено"
+                : "Не подключено";
+          const header = `<header class="p-head"><div class="p-brand"><span class="p-logo">М</span><span><span>Мессенджер</span><span class="p-small" style="display:block">${status}</span></span></div><div class="p-actions">${session ? button("Отключить", "disconnect", "plain") : ""}${button("×", "close", "icon")}</div></header>`;
+          let body = component(state, design, format, ns);
+          if (design === "classic" && format === "desktop" && session) {
+            const convo = state.kind === "conversation";
+            body = `<div class="p-shell classic-split">${state.kind === "chats" ? body : context(state, convo)}${state.kind === "chats" ? `<main class="p-main">${empty(state.pending ? "Ждём список чатов" : state.error ? "Чаты пока недоступны" : "Откройте диалог", state.pending ? "Загрузка ещё не завершена" : state.error ? "Используйте доступные действия слева" : "Выберите чат или начните новый")}</main>` : body}</div>`;
+          }
+          return `<div class="ms-product-window format-${format}" data-format="${format}" data-design="${design}" data-state="${state.id}" data-origin="${state.origin || ""}" data-list-empty="${!!state.listEmpty}">${header}${body.includes('class="p-shell') ? body : `<div class="p-shell">${body}</div>`}</div>`;
+        }
+        function renderSelectors() {
+          screenSelect.value = current.group;
+          stateSelect.innerHTML = catalog
+            .filter((s) => s.group === current.group)
+            .map((s) => `<option value="${s.id}">${esc(s.label)}</option>`)
+            .join("");
+          stateSelect.value = current.id;
+          root.querySelector("#ms-current").textContent = current.label;
+          root.querySelector("#ms-behavior").textContent = current.note;
+        }
+        function renderPreviews() {
+          for (const variant of root.querySelectorAll("[data-variant][data-design]")) {
+            const design = variant.dataset.design;
+            for (const preview of variant.querySelectorAll("[data-preview]")) {
+              const format = preview.dataset.preview;
+              const viewState =
+                current.kind === "phone"
+                  ? {
+                      ...current,
+                      origin: phoneOrigin,
+                      listEmpty: newChatReturnState === "chats-empty",
+                    }
+                  : current;
+              preview.innerHTML = screen(viewState, design, format, `${design}-${format}`);
+            }
+          }
+          if (globalThis.lucide?.createIcons)
+            lucide.createIcons({ attrs: { width: 16, height: 16 } });
+        }
+        function renderAtlas(force = false) {
+          const signature = `classic:${atlasFormat}`;
+          if (!force && atlasSignature === signature) return;
+          atlasSignature = signature;
+          root.querySelector("#ms-atlas-label").textContent =
+            `Список рядом · ${catalog.length} состояний и ситуаций · ${atlasFormat === "desktop" ? "полные экраны со списком слева и рабочей областью справа" : "полные экраны с последовательной навигацией"}`;
+          root.querySelector("#ms-atlas").innerHTML = groups
+            .map(
+              (group) =>
+                `<section class="ms-atlas-group" aria-label="${esc(group)}"><h3>${esc(group)}</h3><div class="ms-atlas-grid" data-format="${atlasFormat}">${catalog
+                  .filter((s) => s.group === group)
+                  .map(
+                    (s) =>
+                      `<article class="ms-atlas-tile" data-atlas-state="${s.id}"><button type="button" class="btn cursor-interaction" data-show-state="${s.id}">${esc(s.label)}</button><div class="ms-atlas-screen format-${atlasFormat}">${screen(s, "classic", atlasFormat, `atlas-classic-${atlasFormat}-${s.id}`)}</div><div class="text-small ms-atlas-note">${esc(s.note)}</div></article>`,
+                  )
+                  .join("")}</div></section>`,
+            )
+            .join("");
+        }
+        function select(id, persist = true, preserveOrigin = false) {
+          const found = catalog.find((s) => s.id === id);
+          if (!found) return;
+          current = found;
+          if (current.origin && !preserveOrigin) {
+            phoneOrigin = current.origin;
+            newChatReturnState = "chats-ready";
+          }
+          renderSelectors();
+          renderPreviews();
+          renderAtlas();
+          if (persist) save();
+        }
+        screenSelect.addEventListener("change", () =>
+          select(catalog.find((s) => s.group === screenSelect.value).id),
+        );
+        stateSelect.addEventListener("change", () => select(stateSelect.value));
+        root
+          .querySelector("#ms-prev")
+          .addEventListener("click", () =>
+            select(catalog[(catalog.indexOf(current) - 1 + catalog.length) % catalog.length].id),
+          );
+        root
+          .querySelector("#ms-next")
+          .addEventListener("click", () =>
+            select(catalog[(catalog.indexOf(current) + 1) % catalog.length].id),
+          );
+        atlasSelect.addEventListener("change", () => {
+          atlasFormat = atlasSelect.value;
+          renderAtlas(true);
+          save();
+        });
+        root.addEventListener("click", (event) => {
+          const stateButton = event.target.closest("[data-show-state]");
+          if (stateButton) {
+            select(stateButton.dataset.showState);
+            root.querySelector("#ms-state").focus();
+            return;
+          }
+          const actionButton = event.target.closest("[data-action]");
+          if (!actionButton || actionButton.disabled) return;
+          const host = actionButton.closest(".ms-product-window,.ms-atlas-surface");
+          const source = catalog.find((s) => s.id === host?.dataset.state) || current;
+          const action = actionButton.dataset.action;
+          if (action === "open") return select("connection-idle");
+          if (action === "close") return select("closed");
+          if (action === "disconnect") return select("disconnected");
+          if (action === "connect") {
+            const fields = host.querySelectorAll("[data-credential]");
+            return select(
+              [...fields].every((f) => f.value.trim()) ? "connecting" : "connection-invalid",
+            );
+          }
+          if (action === "new-chat") {
+            newChatReturnState = source.empty ? "chats-empty" : "chats-ready";
+            phoneOrigin = "chats";
+            return select("phone-editing", true, true);
+          }
+          if (action === "select-chat") {
+            if (actionButton.classList.contains("selected") && source.kind === "conversation")
+              return;
+            return select("history-loading");
+          }
+          if (action === "select-contact") return select("history-loading");
+          if (action === "enter-phone") {
+            phoneOrigin = source.pending ? "pending" : source.error ? "failed" : "ready";
+            return select(
+              phoneOrigin === "pending"
+                ? "phone-from-loading"
+                : phoneOrigin === "failed"
+                  ? "phone-from-error"
+                  : "phone-editing",
+            );
+          }
+          if (action === "back-chats") return select("chats-ready");
+          if (action === "back-phone") {
+            const origin = host.dataset.origin || source.origin || phoneOrigin;
+            return select(
+              origin === "chats"
+                ? host.dataset.listEmpty === "true"
+                  ? "chats-empty"
+                  : "chats-ready"
+                : origin === "pending"
+                  ? "contacts-loading"
+                  : origin === "failed"
+                    ? "contacts-failed"
+                    : "contacts-ready",
+            );
+          }
+          if (action === "open-phone") {
+            const value = host.querySelector("[data-phone]")?.value || "";
+            if (/^\+[\d\s()-]{6,}$/.test(value)) {
+              submittedPhone = value;
+              return select("phone-resolving", true, true);
+            }
+            return select("phone-invalid", true, true);
+          }
+          if (action === "send") return select("message-sending");
+          if (action === "retry")
+            return select(
+              {
+                connection: "connecting",
+                chats: "chats-loading",
+                contacts: "contacts-loading",
+                phone: "phone-resolving",
+                conversation: "history-loading",
+              }[source.kind],
+              true,
+              source.kind === "phone",
+            );
+        });
+        root.addEventListener("input", (event) => {
+          const host = event.target.closest(".ms-product-window,.ms-atlas-surface");
+          if (!host) return;
+          if (event.target.matches("[data-draft]")) {
+            const send = host.querySelector('[data-action="send"]');
+            if (send) send.disabled = !event.target.value.trim();
+          }
+          if (event.target.matches("[data-credential]")) {
+            const connect = host.querySelector('[data-action="connect"]');
+            if (connect)
+              connect.disabled = ![...host.querySelectorAll("[data-credential]")].every((f) =>
+                f.value.trim(),
+              );
+          }
+        });
+        root.addEventListener("keydown", (event) => {
+          if (
+            event.target.matches("[data-draft]") &&
+            event.key === "Enter" &&
+            !event.shiftKey &&
+            !event.isComposing &&
+            event.target.value.trim()
+          ) {
+            event.preventDefault();
+            select("message-sending");
+          }
+        });
+        if (globalThis.addEventListener)
+          globalThis.addEventListener("openai:set_globals", (event) => {
+            const snapshot = event.detail?.globals?.widgetState;
+            const value = snapshot?.modelContent;
+            if (value?.state && catalog.some((s) => s.id === value.state)) {
+              if (["desktop", "widget", "mobile"].includes(value.atlasFormat)) {
+                atlasFormat = value.atlasFormat;
+                atlasSelect.value = atlasFormat;
+              }
+              if (
+                ["chats", "ready", "pending", "failed"].includes(
+                  snapshot?.privateContent?.phoneOrigin,
+                )
+              )
+                phoneOrigin = snapshot.privateContent.phoneOrigin;
+              select(value.state, false, true);
+            }
+          });
+        renderSelectors();
+        renderPreviews();
+        renderAtlas();
+        if (globalThis.Tweak) {
+          for (const variant of root.querySelectorAll("[data-variant][data-design]")) {
+            const prefs = { spacing: 10 };
+            const container = variant.querySelector(".ms-product-set");
+            const tweak = new Tweak({
+              container,
+              onChange: () => container.style.setProperty("--p-gap", `${prefs.spacing}px`),
+            });
+            tweak.addSlider(prefs, "spacing", {
+              label: "Отступы скетча",
+              min: 6,
+              max: 16,
+              unit: "px",
+            });
+          }
+        }
+        root.dataset.sketchStateCount = String(catalog.length);
+        root.dataset.sketchSetCount = String(Object.keys(designs).length);
+      })();
+    </script>
+  </body>
+</html>

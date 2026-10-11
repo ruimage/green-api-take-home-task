@@ -1,0 +1,8 @@
+env = false
+
+[serve.static]
+env = "BUN_PUBLIC_GREEN_API_*"
+
+[test]
+root = "src"
+pathIgnorePatterns = ["**/*.ct.spec.ts", "**/*.e2e.spec.ts"]

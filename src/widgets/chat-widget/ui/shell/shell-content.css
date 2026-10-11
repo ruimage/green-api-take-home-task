@@ -1,0 +1,61 @@
+.messenger-shell,
+.messenger-shell * {
+  box-sizing: border-box;
+}
+.messenger-shell {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  height: min(800px, 86dvh);
+  min-height: 0;
+  overflow: hidden;
+  z-index: 10;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 18px 70px #243a6540;
+}
+.messenger-shell > div {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+.messenger-shell__header {
+  flex: none;
+  padding: 12px 20px;
+  background: #fff;
+  border-bottom: 1px solid #edf0f2;
+}
+.messenger-shell__heading {
+  flex: 1;
+  min-width: 0;
+}
+.messenger-shell__heading h2 {
+  margin: 0;
+}
+.messenger-shell__content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  overflow-wrap: anywhere;
+  background:
+    url("./chat-pattern.svg") repeat,
+    linear-gradient(155deg, #87b9ff, #9bdcd9);
+  background-size:
+    260px 260px,
+    cover;
+  padding: 0;
+}
+@media (max-width: 640px) {
+  .messenger-shell {
+    width: calc(100vw - 24px);
+    height: calc(100dvh - 24px);
+    border-radius: 10px;
+  }
+  .messenger-shell__header {
+    padding: 10px 12px;
+  }
+}

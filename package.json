@@ -1,0 +1,62 @@
+{
+  "name": "green-api-test-task",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Embeddable React messenger widget with GREEN-API, XState and scoped Jotai state",
+  "type": "module",
+  "scripts": {
+    "postinstall": "bun run build:sdk",
+    "build:sdk": "tsc --project node_modules/@green-api/whatsapp-api-client-js-v2/tsconfig.json --moduleResolution node --ignoreDeprecations 6.0",
+    "dev": "bun --env-file=.env.dev ./index.html --watch",
+    "build": "bun run typecheck && bun --no-env-file ./scripts/build.ts",
+    "serve": "bun --no-env-file ./e2e/serve-build.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "bun run test:unit && bun run test:ct",
+    "test:unit": "bun test --pass-with-no-tests",
+    "test:watch": "bun test --watch --pass-with-no-tests",
+    "test:coverage": "bun test --coverage --pass-with-no-tests",
+    "test:ct": "playwright test --config=playwright-ct.config.ts",
+    "test:ct:ui": "playwright test --config=playwright-ct.config.ts --ui",
+    "test:e2e": "playwright test --config=playwright.config.ts --pass-with-no-tests",
+    "test:e2e:ui": "playwright test --config=playwright.config.ts --ui",
+    "test:e2e:install": "playwright install chromium",
+    "lint": "oxlint --deny-warnings src e2e playwright playwright.config.ts playwright-ct.config.ts",
+    "lint:fix": "oxlint --fix --deny-warnings src e2e playwright playwright.config.ts playwright-ct.config.ts",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "check": "bun run typecheck && bun run lint && bun run format:check && bun run build && bun run test"
+  },
+  "dependencies": {
+    "@green-api/whatsapp-api-client-js-v2": "git+https://github.com/green-api/whatsapp-api-client-js-v2.git#3d8da87518ff9a55069ab376cb4eb0fcdff413ea",
+    "@maxhub/max-ui": "0.6.0",
+    "@xstate/react": "6.1.0",
+    "jotai": "2.20.3",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "reselect": "5.3.0",
+    "xstate": "5.33.2"
+  },
+  "devDependencies": {
+    "@happy-dom/global-registrator": "20.14.5",
+    "@playwright/test": "1.64.0",
+    "@statelyai/inspect": "0.7.2",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.7",
+    "@types/bun": "1.4.2",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "jotai-devtools": "0.14.0",
+    "oxfmt": "0.72.0",
+    "oxlint": "1.87.0",
+    "typescript": "6.0.3"
+  },
+  "engines": {
+    "bun": ">=1.4.2"
+  },
+  "packageManager": "bun@1.4.2",
+  "patchedDependencies": {
+    "jotai-devtools@0.14.0": "patches/jotai-devtools@0.14.0.patch"
+  }
+}

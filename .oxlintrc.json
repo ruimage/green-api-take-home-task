@@ -1,0 +1,63 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "react", "jsx-a11y"],
+  "categories": {
+    "correctness": "error"
+  },
+  "rules": {
+    "eqeqeq": ["error", "always"],
+    "no-debugger": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "typescript/consistent-type-imports": [
+      "error",
+      { "prefer": "type-imports", "fixStyle": "separate-type-imports" }
+    ],
+    "typescript/no-explicit-any": "error",
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/button-has-type": "error"
+  },
+  "env": {
+    "builtin": true,
+    "browser": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.config.ts",
+        "e2e/**/*.ts",
+        "src/**/*.ct.spec.ts",
+        "src/**/*.test.ts",
+        "scripts/**/*.ts"
+      ],
+      "env": {
+        "browser": false,
+        "node": true
+      },
+      "globals": {
+        "Bun": "readonly"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "node_modules/",
+    "dist/",
+    "docs/",
+    "coverage/",
+    "playwright-report/",
+    "test-results/",
+    "tmp/",
+    "out-tsc/"
+  ]
+}

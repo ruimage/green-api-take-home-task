@@ -1,0 +1,62 @@
+.mobile-shell {
+  position: fixed;
+  inset: var(--mobile-viewport-top, 0px) 0 auto;
+  width: 100%;
+  max-width: none;
+  height: var(--mobile-viewport-height, 100dvh);
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #fff;
+  overflow: hidden;
+}
+.mobile-shell::backdrop {
+  background: #243a6540;
+}
+.mobile-shell .messenger-shell {
+  position: relative;
+  inset: 0;
+  transform: none;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  box-shadow: none;
+}
+.mobile-shell .messenger-shell__header {
+  min-height: 64px;
+  padding: calc(8px + env(safe-area-inset-top, 0px)) calc(12px + env(safe-area-inset-right, 0px))
+    8px calc(12px + env(safe-area-inset-left, 0px));
+}
+.mobile-shell .messenger-shell__header button {
+  flex-shrink: 0;
+  min-width: 48px;
+  min-height: 48px;
+}
+.mobile-shell .messenger-shell__content {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+.mobile-shell input,
+.mobile-shell textarea {
+  font-size: 16px;
+}
+.mobile-shell .message-composer button {
+  width: 48px;
+  height: 48px;
+}
+.mobile-shell .message-composer {
+  margin-bottom: 8px;
+  padding: 8px;
+  gap: 8px;
+}
+.mobile-shell .message-composer textarea {
+  min-height: 48px;
+  padding: 12px 8px;
+}
+.mobile-shell .connection-form,
+.mobile-shell .phone-form {
+  margin: 16px auto;
+  padding: 20px;
+}

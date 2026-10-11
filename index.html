@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"
+    />
+    <title>GREEN-API Messenger · Host demo</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100svh;
+        background: #fff;
+        color: #1d2023;
+        font:
+          16px/24px -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Arial,
+          sans-serif;
+      }
+      .host-demo {
+        max-width: 40rem;
+        margin: 4rem auto;
+        padding-inline: 24px;
+      }
+      .host-demo h1 {
+        margin: 0 0 16px;
+        font-size: 28px;
+        line-height: 34px;
+        font-weight: 600;
+      }
+      .host-demo p {
+        margin: 0;
+        color: #6d7885;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="./src/widgets/chat-widget/ui/launcher/widget-launcher.css"
+      data-critical
+    />
+  </head>
+  <body>
+    <main class="host-demo">
+      <h1>GREEN-API Messenger</h1>
+      <p>Демонстрационная страница для встраивания чат-виджета.</p>
+    </main>
+    <div id="root"></div>
+    <script type="module" src="./src/app/main.tsx"></script>
+  </body>
+</html>

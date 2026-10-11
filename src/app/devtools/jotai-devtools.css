@@ -1,0 +1,28 @@
+#jotai-devtools-root .jotai-devtools-shell {
+  top: var(--floating-devtools-top, 16px);
+  left: var(--floating-devtools-left, 16px);
+  right: auto;
+  bottom: auto;
+  transform: none;
+  width: min(680px, calc(100vw - 32px));
+  min-width: min(420px, calc(100vw - 32px));
+  min-height: min(240px, calc(100dvh - 32px));
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 32px) !important;
+  resize: both;
+  overflow: hidden;
+}
+
+#jotai-devtools-shell > [data-testid="shell-resize-bar"] {
+  display: none;
+}
+
+#jotai-devtools-shell [data-floating-devtools-header] {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+#jotai-devtools-shell[data-dragging] [data-floating-devtools-header] {
+  cursor: grabbing;
+}

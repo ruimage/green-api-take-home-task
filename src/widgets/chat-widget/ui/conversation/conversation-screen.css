@@ -1,0 +1,20 @@
+.conversation-screen {
+  height: 100%;
+  min-height: 0;
+  padding: 0 8%;
+}
+.conversation-screen__history {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 24px 4px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe flex-end;
+}
+@media (max-width: 640px) {
+  .conversation-screen {
+    padding: 0 12px;
+  }
+}
