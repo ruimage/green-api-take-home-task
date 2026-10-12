@@ -4,6 +4,7 @@ export type ConnectionFormSlots = {
   header: ReactNode;
   idInstance: ReactNode;
   apiTokenInstance: ReactNode;
+  apiUrl: ReactNode;
   status: ReactNode;
   actions: ReactNode;
 };

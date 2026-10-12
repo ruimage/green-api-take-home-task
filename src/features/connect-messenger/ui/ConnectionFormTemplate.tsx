@@ -2,6 +2,7 @@ import { Flex } from "@maxhub/max-ui";
 import { useId, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 
+import { useConnectionApiUrl, validateApiUrl } from "../model/data-state/connection-api-url";
 import { useConnectionDraft } from "../model/data-state/connection-draft";
 import { ConnectMessengerContext } from "../model/state-machine/connect-messenger-context";
 import {
@@ -19,6 +20,7 @@ export function ConnectionFormTemplate({
   header,
   idInstance,
   apiTokenInstance,
+  apiUrl,
   status,
   actions,
 }: ConnectionFormSlots) {
@@ -26,6 +28,7 @@ export function ConnectionFormTemplate({
   const pending = ConnectMessengerContext.useSelector(selectConnecting);
   const available = ConnectMessengerContext.useSelector(selectConnectionAvailable);
   const { draft } = useConnectionDraft();
+  const { apiUrl: apiUrlValue, editable: apiUrlEditable } = useConnectionApiUrl();
   const [submitted, setSubmitted] = useState(false);
   const titleId = `${useId()}-title`;
   const state = useMemo(
@@ -42,7 +45,9 @@ export function ConnectionFormTemplate({
       ? "idInstance"
       : errors.apiTokenInstance
         ? "apiTokenInstance"
-        : null;
+        : apiUrlEditable && validateApiUrl(apiUrlValue)
+          ? "apiUrl"
+          : null;
     if (invalidField) {
       const field = event.currentTarget.elements.namedItem(invalidField);
       if (field instanceof HTMLElement) field.focus();
@@ -65,6 +70,7 @@ export function ConnectionFormTemplate({
           {header}
           {idInstance}
           {apiTokenInstance}
+          {apiUrl}
           {status}
           {actions}
         </Flex>

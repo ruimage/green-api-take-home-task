@@ -2,10 +2,32 @@ import { useState } from "react";
 
 import { App } from "@/app/App";
 import { createAppRuntime } from "@/app/model/runtime/create-app-runtime";
+import { createRestAppRuntime } from "@/app/model/runtime/create-rest-app-runtime";
 
 export const Default = () => <App />;
 
 export const WhatsAppConversation = () => <ConversationPreview adapter="sdk" />;
+
+export function RestConnection({ apiUrl }: { apiUrl?: string }) {
+  const [runtime] = useState(() =>
+    createRestAppRuntime({
+      apiUrl,
+      fetch: async (url) => {
+        if (new URL(url).origin !== "https://example.invalid") {
+          throw new Error("Unexpected API URL");
+        }
+        return Response.json({ stateInstance: "notAuthorized" });
+      },
+    }),
+  );
+  return (
+    <App
+      input={runtime.input}
+      store={runtime.store}
+      initialCredentials={{ idInstance: "123456", apiTokenInstance: "preview-token" }}
+    />
+  );
+}
 
 export function ConnectionPending() {
   const [runtime] = useState(() =>

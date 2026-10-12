@@ -12,6 +12,36 @@ async function expectDescription(page: Page, input: Locator, text: string) {
 
 const privacy = "Данные подключения хранятся только в памяти этой сессии.";
 
+test("missing API URL reveals a required field and uses the manually entered endpoint", async ({
+  mount,
+}) => {
+  const component = await mount("App/RestConnection");
+  await component.getByRole("button", { name: "Открыть чат" }).click();
+  const form = component.getByRole("form", { name: "Подключение чата" });
+  const apiUrl = form.getByLabel("ApiUrl", { exact: true });
+  const submit = form.getByRole("button", { name: "Подключить", exact: true });
+  await expect(apiUrl).toBeVisible();
+  await expect(apiUrl).toHaveValue("");
+  await submit.click();
+  await expect(apiUrl).toBeFocused();
+  await expect(form.getByRole("alert")).toHaveText("Введите ApiUrl.");
+  await apiUrl.fill("ftp://example.invalid");
+  await submit.click();
+  await expect(apiUrl).toHaveAttribute("aria-invalid", "true");
+  await apiUrl.fill("https://example.invalid/");
+  await expect(apiUrl).toHaveAttribute("aria-invalid", "false");
+  await submit.click();
+  await expect(form.getByRole("alert")).toContainText("не авторизован");
+});
+
+test("configured API URL hides the manual field", async ({ mount }) => {
+  const component = await mount("App/RestConnection", { apiUrl: "https://example.invalid" });
+  await component.getByRole("button", { name: "Открыть чат" }).click();
+  await expect(component.getByLabel("ApiUrl", { exact: true })).toHaveCount(0);
+  await component.getByRole("button", { name: "Подключить", exact: true }).click();
+  await expect(component.getByRole("alert")).toContainText("не авторизован");
+});
+
 test("connection fields reveal validation on submit and focus the first invalid field", async ({
   mount,
   page,

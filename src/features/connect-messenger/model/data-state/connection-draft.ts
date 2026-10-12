@@ -3,6 +3,8 @@ import type { createStore } from "jotai";
 
 import type { MessengerCredentialsDto } from "@/shared/service/messenger/dto";
 
+import { apiUrlDraftAtom } from "./connection-api-url";
+
 const emptyDraft: MessengerCredentialsDto = { idInstance: "", apiTokenInstance: "" };
 
 export const connectionDraftAtom = atom<MessengerCredentialsDto>(emptyDraft);
@@ -23,4 +25,5 @@ export function useConnectionDraft() {
 
 export function clearConnectionDraft(store: Pick<ReturnType<typeof createStore>, "set">) {
   store.set(connectionDraftAtom, emptyDraft);
+  store.set(apiUrlDraftAtom, "");
 }

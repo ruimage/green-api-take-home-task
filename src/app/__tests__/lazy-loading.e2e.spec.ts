@@ -71,6 +71,7 @@ async function mockGreenApi(page: Page) {
 async function submitConnection(page: Page) {
   await page.getByLabel("idInstance", { exact: true }).fill("123");
   await page.getByLabel("apiTokenInstance", { exact: true }).fill("test-token");
+  await page.getByLabel("ApiUrl", { exact: true }).fill("https://api.green-api.com");
   await page.getByRole("button", { name: "Подключить", exact: true }).click();
 }
 
@@ -112,7 +113,7 @@ test("opens the connection form immediately and loads later screens at their wor
   expect(connectionSource).not.toContain("Выбранный чат");
 
   await page.getByRole("button", { name: "Подключить", exact: true }).click();
-  await expect(page.getByRole("alert")).toHaveCount(2);
+  await expect(page.getByRole("alert")).toHaveCount(3);
   expect(scripts.requests).toHaveLength(connectionRequests);
   expect(api.endpoints).toEqual([]);
 

@@ -3,7 +3,7 @@ import type { ComponentType } from "react";
 import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
 
-import { ConnectionPending, Default, WhatsAppConversation } from "./stories";
+import { ConnectionPending, Default, RestConnection, WhatsAppConversation } from "./stories";
 
 import "@/app/styles/index.css";
 
@@ -23,6 +23,7 @@ const stories: Record<string, ComponentType<Record<string, unknown>>> = {
   "App/Default": Default,
   "App/WhatsAppConversation": WhatsAppConversation,
   "App/ConnectionPending": ConnectionPending,
+  "App/RestConnection": RestConnection,
 };
 const container = document.getElementById("root");
 

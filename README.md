@@ -32,7 +32,7 @@ bun run dev
 
 В форме указать credentials авторизованного в WhatsApp инстанса, затем международный номер. Для HTTP-получения уведомлений нужны `webhookUrl: ""` и `incomingWebhook: "yes"`. Enter отправляет сообщение, Shift+Enter добавляет строку.
 
-Для автозаполнения формы скопировать [`.env.dev.example`](.env.dev.example) в игнорируемый `.env.dev`. `BUN_PUBLIC_GREEN_API_API_URL` задаёт адрес API, по умолчанию — `https://api.green-api.com`. Значения доступны браузеру только в dev.
+Для автозаполнения формы скопировать [`.env.dev.example`](.env.dev.example) в игнорируемый `.env.dev`. `BUN_PUBLIC_GREEN_API_API_URL` задаёт адрес API. Если он не указан, форма показывает обязательное поле `ApiUrl` для ручного ввода. Значения доступны браузеру только в dev.
 
 ```powershell
 bun run build

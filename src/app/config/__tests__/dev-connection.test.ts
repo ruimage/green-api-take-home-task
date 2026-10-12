@@ -31,10 +31,11 @@ test("dev config returns DTO credentials and a normalized API URL", () => {
   });
 });
 
-test("omitted API URL uses the SDK default endpoint", () => {
+test.each([undefined, "", "  "])("missing API URL remains available for manual entry", (apiUrl) => {
   expect(
-    parseDevConnectionConfig({ idInstance: "123456", apiTokenInstance: "stub-token" }).apiUrl,
-  ).toBe("https://api.green-api.com");
+    parseDevConnectionConfig({ idInstance: "123456", apiTokenInstance: "stub-token", apiUrl })
+      .apiUrl,
+  ).toBeUndefined();
 });
 
 test.each([
@@ -90,4 +91,15 @@ test("development runtime without credentials leaves the form empty", () => {
   process.env.BUN_PUBLIC_GREEN_API_API_TOKEN_INSTANCE = "";
   process.env.BUN_PUBLIC_GREEN_API_API_URL = "";
   expect(readDevConnectionConfig()).toBeNull();
+});
+
+test("development runtime can configure API URL without prefilled credentials", () => {
+  process.env.NODE_ENV = "development";
+  process.env.BUN_PUBLIC_GREEN_API_ID_INSTANCE = "";
+  process.env.BUN_PUBLIC_GREEN_API_API_TOKEN_INSTANCE = "";
+  process.env.BUN_PUBLIC_GREEN_API_API_URL = "https://example.invalid/";
+  expect(readDevConnectionConfig()).toEqual({
+    credentials: undefined,
+    apiUrl: "https://example.invalid",
+  });
 });

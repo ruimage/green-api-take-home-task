@@ -13,9 +13,17 @@ export function parseDevConnectionConfig(values: {
     );
   }
 
+  const credentials: MessengerCredentialsDto = { idInstance, apiTokenInstance };
+  return { credentials, apiUrl: parseDevApiUrl(values.apiUrl) };
+}
+
+function parseDevApiUrl(value?: string) {
+  const apiUrl = value?.trim();
+  if (!apiUrl) return undefined;
+
   let url: URL;
   try {
-    url = new URL(values.apiUrl?.trim() || "https://api.green-api.com");
+    url = new URL(apiUrl);
   } catch {
     throw new Error("BUN_PUBLIC_GREEN_API_API_URL должен содержать абсолютный HTTP(S) URL.");
   }
@@ -31,8 +39,7 @@ export function parseDevConnectionConfig(values: {
     );
   }
 
-  const credentials: MessengerCredentialsDto = { idInstance, apiTokenInstance };
-  return { credentials, apiUrl: url.href.replace(/\/+$/, "") };
+  return url.href.replace(/\/+$/, "");
 }
 
 export function readDevConnectionConfig() {
@@ -43,7 +50,10 @@ export function readDevConnectionConfig() {
     apiTokenInstance: optionalDevValue(() => process.env.BUN_PUBLIC_GREEN_API_API_TOKEN_INSTANCE),
     apiUrl: optionalDevValue(() => process.env.BUN_PUBLIC_GREEN_API_API_URL),
   };
-  if (!values.idInstance?.trim() && !values.apiTokenInstance?.trim()) return null;
+  if (!values.idInstance?.trim() && !values.apiTokenInstance?.trim()) {
+    const apiUrl = parseDevApiUrl(values.apiUrl);
+    return apiUrl ? { credentials: undefined, apiUrl } : null;
+  }
   return parseDevConnectionConfig(values);
 }
 

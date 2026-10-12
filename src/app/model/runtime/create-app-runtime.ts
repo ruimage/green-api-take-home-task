@@ -1,12 +1,10 @@
 import type { AppRuntimeOptions } from "../types";
-import { createRestSessionFactory } from "./create-rest-session-factory";
+import { createRestAppRuntime } from "./create-rest-app-runtime";
 import { createRuntimeWithSessions } from "./create-runtime-with-sessions";
 import { createSdkSessionFactory } from "./create-sdk-session-factory";
 
 export function createAppRuntime(options: AppRuntimeOptions = {}) {
-  return createRuntimeWithSessions(
-    options.adapter === "rest"
-      ? createRestSessionFactory(options)
-      : createSdkSessionFactory(options),
-  );
+  return options.adapter === "rest"
+    ? createRestAppRuntime(options)
+    : createRuntimeWithSessions(createSdkSessionFactory(options));
 }

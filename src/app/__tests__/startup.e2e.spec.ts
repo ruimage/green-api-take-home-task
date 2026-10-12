@@ -47,6 +47,8 @@ for (const [name, viewport] of [
     await expect(page.getByLabel("idInstance", { exact: true })).toBeVisible();
     await expect(page.getByLabel("idInstance", { exact: true })).toHaveValue("");
     await expect(page.getByLabel("apiTokenInstance", { exact: true })).toHaveValue("");
+    await expect(page.getByLabel("ApiUrl", { exact: true })).toBeVisible();
+    await expect(page.getByLabel("ApiUrl", { exact: true })).toHaveValue("");
     await expect(page.getByRole("button", { name: "Закрыть чат" })).toBeInViewport();
     await expect(page.getByRole("form", { name: "Подключение чата" })).toHaveCSS(
       "background-color",

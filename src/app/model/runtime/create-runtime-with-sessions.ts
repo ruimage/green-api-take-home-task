@@ -7,8 +7,7 @@ import type {
 
 import { createAppDataBridge } from "../data-state/create-app-data-bridge";
 
-export function createRuntimeWithSessions(sessions: AppSessionFactory) {
-  const store = createStore();
+export function createRuntimeWithSessions(sessions: AppSessionFactory, store = createStore()) {
   const input: AppMachineInput = {
     data: createAppDataBridge(store),
     sessions,
